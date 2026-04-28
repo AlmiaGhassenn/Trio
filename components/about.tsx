@@ -4,9 +4,9 @@ import { motion } from "framer-motion"
 import { Globe, Zap } from "lucide-react"
 
 const team = [
-  { name: "Alex Chen", role: "Developer", initials: "AC", color: "bg-primary" },
-  { name: "Maya Santos", role: "Designer", initials: "MS", color: "bg-blue-500" },
-  { name: "Jordan Lee", role: "Strategist", initials: "JL", color: "bg-orange-500" },
+  { name: "Almia Ghassen", role: "Web Developer", initials: "AG", color: "bg-primary" },
+  { name: "Safa", role: "Social Media Manager", initials: "S", color: "bg-blue-500" },
+  { name: "Ghassen", role: "Video Editor", initials: "G", color: "bg-orange-500" },
 ]
 
 export function About() {
