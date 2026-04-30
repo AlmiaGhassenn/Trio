@@ -8,7 +8,16 @@ export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
+  // Prevent hydration mismatch by only rendering on client
+  const [isClient, setIsClient] = useState(false)
+
   useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isClient) return
+
     // Only show custom cursor on desktop
     const isMobile = window.matchMedia("(max-width: 768px)").matches
     if (isMobile) return
@@ -46,7 +55,11 @@ export function CustomCursor() {
       document.removeEventListener("mouseover", handleMouseOver)
       document.removeEventListener("mouseout", handleMouseOut)
     }
-  }, [])
+  }, [isClient])
+
+  if (!isClient) {
+    return null
+  }
 
   if (!isVisible) return null
 

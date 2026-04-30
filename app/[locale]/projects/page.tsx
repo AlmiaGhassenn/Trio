@@ -4,14 +4,25 @@ import { ArrowUpRight } from "lucide-react"
 import { projects } from "@/lib/projects"
 import { getDictionary } from "@/lib/i18n"
 
-const t = getDictionary("en")
-
-export const metadata: Metadata = {
-  title: `${t.projectsPage.title} | TRIO Agency`,
-  description: t.projectsPage.subtitle,
+interface ProjectsPageProps {
+  params: Promise<{
+    locale: string
+  }>
 }
 
-export default function ProjectsPage() {
+export async function generateMetadata({ params }: ProjectsPageProps): Promise<Metadata> {
+  const { locale } = await params
+  const t = getDictionary(locale)
+  return {
+    title: `${t.projectsPage.title} | TRIO Agency`,
+    description: t.projectsPage.subtitle,
+  }
+}
+
+export default function LocaleProjectsPage({ params }: ProjectsPageProps) {
+  const t = getDictionary(params.locale)
+  const basePath = params.locale === "en" ? "/" : `/${params.locale}`
+
   return (
     <main className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -26,7 +37,7 @@ export default function ProjectsPage() {
             </p>
           </div>
           <Link
-            href="/"
+            href={basePath}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium text-foreground transition-all duration-200 hover:border-primary/50 hover:bg-secondary"
           >
             {t.projectsPage.back}

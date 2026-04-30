@@ -1,15 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
-
-const services = [
-  "Web Development",
-  "Video Editing",
-  "Social Media Management",
-  "Branding & Design",
-]
+import { useTranslations } from "@/lib/locale-context"
 
 export function Marquee() {
+  const t = useTranslations()
+
   return (
     <section className="relative py-6 bg-card border-y border-border overflow-hidden">
       <motion.div
@@ -21,7 +17,7 @@ export function Marquee() {
       >
         {[...Array(4)].map((_, setIndex) => (
           <div key={setIndex} className="flex shrink-0">
-            {services.map((service, index) => (
+            {t.marquee.map((service, index) => (
               <div
                 key={`${setIndex}-${index}`}
                 className="flex items-center gap-4 px-8"

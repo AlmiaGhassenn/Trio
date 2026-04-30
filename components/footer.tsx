@@ -2,14 +2,9 @@
 
 import { motion } from "framer-motion"
 import { Instagram, Linkedin, Dribbble } from "lucide-react"
-
-const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Work", href: "#work" },
-  { name: "Process", href: "#process" },
-  { name: "Contact", href: "#contact" },
-]
+import { useTranslations } from "@/lib/locale-context"
+import { usePathname } from "next/navigation"
+import { supportedLocales, defaultLocale, type Locale } from "@/lib/i18n"
 
 const socialLinks = [
   { name: "Instagram", href: "#", icon: Instagram },
@@ -17,7 +12,30 @@ const socialLinks = [
   { name: "Behance", href: "#", icon: Dribbble },
 ]
 
+function getLocaleFromPathname(pathname: string) {
+  const match = pathname.match(new RegExp(`^/(${supportedLocales.join("|")})(/|$)`))
+  return (match?.[1] as Locale) || defaultLocale
+}
+
+function getPathWithoutLocale(pathname: string) {
+  const match = pathname.match(new RegExp(`^/(${supportedLocales.join("|")})(.*)$`))
+  return match ? match[2] || "/" : pathname || "/"
+}
+
 export function Footer() {
+  const t = useTranslations()
+  const pathname = usePathname() || "/"
+  const locale = getLocaleFromPathname(pathname)
+  const prefix = locale === defaultLocale ? "" : `/${locale}`
+
+  const navLinks = [
+    { name: t.nav.about, href: `${prefix}#about` },
+    { name: t.nav.services, href: `${prefix}#services` },
+    { name: t.nav.work, href: `${prefix}#work` },
+    { name: t.nav.process, href: `${prefix}#process` },
+    { name: t.nav.contact, href: `${prefix}#contact` },
+  ]
+
   return (
     <footer className="border-t border-border bg-card/50">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12">
@@ -28,7 +46,6 @@ export function Footer() {
           transition={{ duration: 0.6 }}
           className="flex flex-col lg:flex-row items-center justify-between gap-8"
         >
-          {/* Logo & Tagline */}
           <div className="flex flex-col items-center lg:items-start gap-2">
             <a href="#" className="flex items-center gap-2">
               <span className="font-[var(--font-syne)] text-2xl font-bold tracking-tight text-foreground">
@@ -36,12 +53,9 @@ export function Footer() {
               </span>
               <span className="h-2 w-2 rounded-full bg-primary" />
             </a>
-            <p className="text-sm text-muted-foreground">
-              Three Minds. One Vision.
-            </p>
+            <p className="text-sm text-muted-foreground">{t.footer.tagline}</p>
           </div>
 
-          {/* Navigation */}
           <nav className="flex flex-wrap justify-center gap-6">
             {navLinks.map((link) => (
               <a
@@ -54,7 +68,6 @@ export function Footer() {
             ))}
           </nav>
 
-          {/* Social Links */}
           <div className="flex items-center gap-4">
             {socialLinks.map((link) => {
               const Icon = link.icon
@@ -72,7 +85,6 @@ export function Footer() {
           </div>
         </motion.div>
 
-        {/* Copyright */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -81,7 +93,7 @@ export function Footer() {
           className="mt-12 pt-8 border-t border-border text-center"
         >
           <p className="text-sm text-muted-foreground">
-            <span suppressHydrationWarning={true}>2026</span> TRIO Agency. All rights reserved.
+            <span suppressHydrationWarning={true}>2026</span> {t.footer.copyright}
           </p>
         </motion.div>
       </div>

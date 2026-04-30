@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Star } from "lucide-react"
+import { useTranslations } from "@/lib/locale-context"
 
 const testimonials = [
   {
@@ -34,10 +35,11 @@ const testimonials = [
 ]
 
 export function Testimonials() {
+  const t = useTranslations()
+
   return (
     <section className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,14 +48,13 @@ export function Testimonials() {
           className="text-center mb-16"
         >
           <h2 className="font-[var(--font-syne)] text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-            What Our <span className="text-primary">Clients</span> Say
+            {t.testimonials.titleLine1} <span className="text-primary">{t.testimonials.titleHighlight}</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-            {"Don't just take our word for it. Here's what the people we've worked with have to say."}
+            {t.testimonials.subtitle}
           </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -65,7 +66,6 @@ export function Testimonials() {
               whileHover={{ y: -8 }}
               className="group relative rounded-3xl border border-border bg-card p-8 transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5"
             >
-              {/* Stars */}
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -75,12 +75,10 @@ export function Testimonials() {
                 ))}
               </div>
 
-              {/* Quote */}
               <p className="mt-6 text-foreground italic leading-relaxed">
                 {`"${testimonial.quote}"`}
               </p>
 
-              {/* Author */}
               <div className="mt-8 flex items-center gap-4">
                 <div
                   className={`flex h-12 w-12 items-center justify-center rounded-full ${testimonial.color} text-white font-medium`}
@@ -88,9 +86,7 @@ export function Testimonials() {
                   {testimonial.initials}
                 </div>
                 <div>
-                  <div className="font-medium text-foreground">
-                    {testimonial.name}
-                  </div>
+                  <div className="font-medium text-foreground">{testimonial.name}</div>
                   <div className="text-sm text-muted-foreground">
                     {testimonial.title}, {testimonial.company}
                   </div>

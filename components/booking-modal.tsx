@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Calendar, Clock, User, Mail, Phone, MessageCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "@/lib/locale-context"
 
 interface BookingModalProps {
   isOpen: boolean
@@ -32,6 +33,7 @@ const availableDays = [
 ]
 
 export function BookingModal({ isOpen, onClose }: BookingModalProps) {
+  const t = useTranslations()
   const [selectedDay, setSelectedDay] = useState<string | null>(null)
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const [formData, setFormData] = useState({
@@ -45,7 +47,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
     e.preventDefault()
     if (!selectedDay || !selectedTime) return
 
-    const subject = encodeURIComponent("Free Consultation - TRIO Agency")
+    const subject = encodeURIComponent(t.bookingModal.emailSubject)
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nPreferred Date: ${selectedDay}\nPreferred Time: ${selectedTime}\nMessage: ${formData.message}`
     )
@@ -84,17 +86,17 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 </div>
                 <div>
                   <h3 className="font-[var(--font-syne)] text-xl font-bold text-foreground">
-                    Book a Free Call
+                    {t.bookingModal.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Choose a time that works for you
+                    {t.bookingModal.subtitle}
                   </p>
                 </div>
               </div>
               <button
                 onClick={onClose}
                 className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-                aria-label="Close modal"
+                aria-label={t.bookingModal.close}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -107,7 +109,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 <div className="flex items-center justify-center gap-2">
                   <div className="flex h-2 w-2 rounded-full bg-primary" />
                   <span className="text-sm text-muted-foreground">
-                    Select your preferred time slot
+                    {t.bookingModal.stepLabel}
                   </span>
                 </div>
 
@@ -116,7 +118,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                   {/* Mini Calendar */}
                   <div className="rounded-2xl border border-border bg-card/50 p-4">
                     <div className="mb-3 flex items-center justify-between">
-                      <span className="font-medium text-foreground">April 2026</span>
+                      <span className="font-medium text-foreground">{t.bookingModal.monthLabel}</span>
                     </div>
                     <div className="grid grid-cols-7 gap-1">
                       {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
@@ -151,7 +153,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                   {/* Time Slots */}
                   <div>
                     <label className="mb-3 block text-sm font-medium text-foreground">
-                      Select time slot
+                      {t.bookingModal.selectTimeLabel}
                     </label>
                     <div className="grid grid-cols-4 gap-2">
                       {timeSlots.map((time) => (
@@ -180,7 +182,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                     <div>
                       <label className="mb-2 flex items-center gap-2 text-sm font-medium text-foreground">
                         <User className="h-4 w-4 text-muted-foreground" />
-                        Full Name
+                        {t.bookingModal.fullName}
                       </label>
                       <input
                         type="text"
@@ -190,13 +192,13 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                           setFormData({ ...formData, name: e.target.value })
                         }
                         className="w-full rounded-xl border border-border bg-card/50 px-4 py-3 text-foreground placeholder-muted-foreground transition-all focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
-                        placeholder="Alex Chen"
+                        placeholder={t.bookingModal.placeholderName}
                       />
                     </div>
                     <div>
                       <label className="mb-2 flex items-center gap-2 text-sm font-medium text-foreground">
                         <Mail className="h-4 w-4 text-muted-foreground" />
-                        Email
+                        {t.bookingModal.email}
                       </label>
                       <input
                         type="email"
@@ -206,7 +208,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                           setFormData({ ...formData, email: e.target.value })
                         }
                         className="w-full rounded-xl border border-border bg-card/50 px-4 py-3 text-foreground placeholder-muted-foreground transition-all focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
-                        placeholder="alex@example.com"
+                        placeholder={t.bookingModal.placeholderEmail}
                       />
                     </div>
                   </div>
@@ -214,7 +216,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                   <div>
                     <label className="mb-2 flex items-center gap-2 text-sm font-medium text-foreground">
                       <Phone className="h-4 w-4 text-muted-foreground" />
-                      Phone (optional)
+                      {t.bookingModal.phoneOptional}
                     </label>
                     <input
                       type="tel"
@@ -223,14 +225,14 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                         setFormData({ ...formData, phone: e.target.value })
                       }
                       className="w-full rounded-xl border border-border bg-card/50 px-4 py-3 text-foreground placeholder-muted-foreground transition-all focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
-                      placeholder="+1 (555) 000-0000"
+                      placeholder={t.bookingModal.placeholderPhone}
                     />
                   </div>
 
                   <div>
                     <label className="mb-2 flex items-center gap-2 text-sm font-medium text-foreground">
                       <MessageCircle className="h-4 w-4 text-muted-foreground" />
-                      Message (optional)
+                      {t.bookingModal.messageOptional}
                     </label>
                     <textarea
                       value={formData.message}
@@ -239,7 +241,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                       }
                       rows={3}
                       className="w-full rounded-xl border border-border bg-card/50 px-4 py-3 text-foreground placeholder-muted-foreground transition-all focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none resize-none"
-                      placeholder="What would you like to discuss?"
+                      placeholder={t.bookingModal.placeholderMessage}
                     />
                   </div>
                 </div>
@@ -257,11 +259,11 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                       : "cursor-not-allowed bg-secondary/50 text-muted-foreground"
                   )}
                 >
-                  Confirm Booking
+                  {t.bookingModal.confirm}
                 </motion.button>
 
                 <p className="text-center text-xs text-muted-foreground">
-                  By booking, you agree to a 30-minute consultation call
+                  {t.bookingModal.agreement}
                 </p>
               </form>
             </div>
