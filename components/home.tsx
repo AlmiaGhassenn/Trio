@@ -9,12 +9,14 @@ import { Testimonials } from "@/components/testimonials"
 import { CTA } from "@/components/cta"
 import { Footer } from "@/components/footer"
 import { CustomCursor } from "@/components/custom-cursor"
+import { BackToTop } from "@/components/back-to-top"
 
 export function HomeContent() {
   return (
     <>
       <CustomCursor />
       <Navigation />
+      <BackToTop />
       <main>
         <Hero />
         <Marquee />

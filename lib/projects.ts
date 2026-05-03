@@ -7,22 +7,28 @@ export type Project = {
   year: string
   services: string[]
   highlights: string[]
+  author?: string
+  portfolioUrl?: string
+  image?: string
 }
 
 export const projects: Project[] = [
   {
-    title: "Luxe Properties",
+    title: "Almia Ghassen",
     category: "Web Development",
-    description: "A premium real estate platform with advanced search and virtual tours.",
+    description: "Creative web development portfolio showcasing modern design and interactive experiences.",
     gradient: "from-emerald-500/20 to-cyan-500/20",
     pattern: "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))]",
     year: "2025",
-    services: ["UI/UX", "Frontend", "SEO"],
+    services: ["UI/UX", "Frontend", "Interactive Design"],
     highlights: [
-      "Custom listings, filters, and immersive 3D preview experience.",
-      "Optimized for speed and conversions across desktop and mobile.",
-      "Integrated virtual tour workflow and CRM-ready lead forms.",
+      "Innovative web solutions with cutting-edge technologies.",
+      "Responsive and performant designs across all devices.",
+      "Interactive animations and modern user experiences.",
     ],
+    author: "Almia Ghassen",
+    portfolioUrl: "https://my-pro-portfolio-three.vercel.app",
+    image: "/Almia_ghassen_thumm.png",
   },
   {
     title: "Vibe Studios",

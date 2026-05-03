@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
+import { useState } from "react"
 import { projects } from "@/lib/projects"
 import { usePathname } from "next/navigation"
 import { useTranslations } from "@/lib/locale-context"
 import { supportedLocales, defaultLocale, type Locale } from "@/lib/i18n"
+import { PortfolioModal } from "@/components/portfolio-modal"
 
 function getLocaleFromPathname(pathname: string) {
   const match = pathname.match(new RegExp(`^/(${supportedLocales.join("|")})(/|$)`))
@@ -18,10 +20,17 @@ function getPathWithoutLocale(pathname: string) {
 }
 
 export function Portfolio() {
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
   const t = useTranslations()
   const pathname = usePathname() || "/"
   const locale = getLocaleFromPathname(pathname)
   const prefix = locale === defaultLocale ? "" : `/${locale}`
+
+  const handleProjectClick = (project: typeof projects[0]) => {
+    if (project.portfolioUrl) {
+      setSelectedProject(project)
+    }
+  }
 
   return (
     <section id="work" className="py-24 lg:py-32 bg-card/50">
@@ -52,8 +61,18 @@ export function Portfolio() {
               className="group relative"
             >
               <div
-                className={`relative aspect-[4/3] rounded-3xl border border-border bg-card overflow-hidden transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10`}
+                onClick={() => handleProjectClick(project)}
+                className={`relative aspect-[4/3] rounded-3xl border border-border bg-card overflow-hidden transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 ${
+                  project.portfolioUrl ? "cursor-pointer" : ""
+                }`}
               >
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+                  />
+                )}
                 <div
                   className={`absolute inset-0 ${project.pattern} ${project.gradient} opacity-50 transition-opacity duration-500 group-hover:opacity-70`}
                 />
@@ -104,6 +123,16 @@ export function Portfolio() {
           </a>
         </motion.div>
       </div>
+
+      {selectedProject && (
+        <PortfolioModal
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+          title={selectedProject.author || selectedProject.title}
+          portfolioUrl={selectedProject.portfolioUrl || ""}
+          image={selectedProject.image || "/placeholder-user.jpg"}
+        />
+      )}
     </section>
   )
 }
