@@ -5,6 +5,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import { X, Calendar, Clock, User, Mail, Phone, MessageCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "@/lib/locale-context"
+import emailjs from "@emailjs/browser"
+
+// Initialize EmailJS (replace with your public key)
+emailjs.init("B288mxIvb_xVFyXQa")
 
 interface BookingModalProps {
   isOpen: boolean
@@ -43,17 +47,77 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
     message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedDay || !selectedTime) return
+    if (!selectedDay || !selectedTime || !formData.name || !formData.email) return
 
-    const subject = encodeURIComponent(t.bookingModal.emailSubject)
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nPreferred Date: ${selectedDay}\nPreferred Time: ${selectedTime}\nMessage: ${formData.message}`
-    )
-    
-    window.location.href = `mailto:hello@trio.agency?subject=${subject}&body=${body}`
-    onClose()
+    try {
+      // Send notification to business owner
+      await emailjs.send(
+        "service_uhjejk8",
+        "template_pv4xjga",
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          preferred_date: selectedDay,
+          preferred_time: selectedTime,
+          message: formData.message,
+          reply_to: formData.email,
+        }
+      )
+
+      // Send confirmation email to client
+      await emailjs.send(
+        "service_uhjejk8",
+        "template_qk4xjva", // You'll need to create this template
+        {
+          to_name: formData.name,
+          to_email: formData.email,
+          preferred_date: selectedDay,
+          preferred_time: selectedTime,
+        }
+      )
+      
+      alert("Email sent successfully! We'll get back to you soon.")
+      onClose()
+      setFormData({ name: "", email: "", phone: "", message: "" })
+      setSelectedDay(null)
+      setSelectedTime(null)
+    } catch (error: any) {
+      console.error("Failed to send email:", error)
+      
+      // More specific error handling
+      let errorMessage = "Failed to send email. Please try again."
+      
+      if (error?.text) {
+        errorMessage = `EmailJS Error: ${error.text}`
+      } else if (error?.message) {
+        errorMessage = `Error: ${error.message}`
+      } else if (error?.status) {
+        switch (error.status) {
+          case 400:
+            errorMessage = "Invalid request. Please check your form data."
+            break
+          case 401:
+            errorMessage = "Authentication failed. Please check your EmailJS credentials."
+            break
+          case 402:
+            errorMessage = "EmailJS quota exceeded. Please check your account."
+            break
+          case 422:
+            errorMessage = "Template configuration error. Please check your EmailJS template."
+            break
+          case 500:
+            errorMessage = "Server error. Please try again later."
+            break
+          default:
+            errorMessage = `Server error (${error.status}). Please try again.`
+        }
+      }
+      
+      alert(errorMessage)
+    }
   }
 
   return (
