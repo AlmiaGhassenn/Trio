@@ -43,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background" suppressHydrationWarning>
-      <body className={`font-sans antialiased`} style={{ '--font-dm-sans': dmSans.variable, '--font-syne': syne.variable } as React.CSSProperties}>
+      <body className={`font-sans antialiased`} style={{ '--font-dm-sans': dmSans.variable, '--font-syne': syne.variable } as React.CSSProperties} suppressHydrationWarning>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

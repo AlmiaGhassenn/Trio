@@ -48,10 +48,7 @@ export function Footer() {
         >
           <div className="flex flex-col items-center lg:items-start gap-2">
             <a href="#" className="flex items-center gap-2">
-              <span className="font-[var(--font-syne)] text-2xl font-bold tracking-tight text-foreground">
-                TRIO
-              </span>
-              <span className="h-2 w-2 rounded-full bg-primary" />
+              <img src="/logo.png" alt="TRIO" className="h-20 w-auto" />
             </a>
             <p className="text-sm text-muted-foreground">{t.footer.tagline}</p>
           </div>

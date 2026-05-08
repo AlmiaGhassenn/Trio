@@ -76,10 +76,7 @@ export function Navigation() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between gap-4">
             <a href="#" className="flex items-center gap-2">
-              <span className="font-[var(--font-syne)] text-2xl font-bold tracking-tight text-foreground">
-                TRIO
-              </span>
-              <span className="h-2 w-2 rounded-full bg-primary" />
+              <img src="/logo.png" alt="TRIO" className="h-20 w-auto" />
             </a>
 
             <div className="hidden md:flex items-center gap-10">
