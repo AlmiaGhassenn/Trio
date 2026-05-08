@@ -4,38 +4,9 @@ import { motion } from "framer-motion"
 import { Star } from "lucide-react"
 import { useTranslations } from "@/lib/locale-context"
 
-const testimonials = [
-  {
-    quote:
-      "TRIO transformed our online presence completely. The website they built not only looks stunning but actually converts visitors into customers.",
-    name: "Sarah Mitchell",
-    title: "CEO",
-    company: "Luxe Properties",
-    initials: "SM",
-    color: "bg-emerald-500",
-  },
-  {
-    quote:
-      "Working with TRIO felt like having an in-house team. They understood our vision from day one and delivered beyond expectations.",
-    name: "Marcus Chen",
-    title: "Founder",
-    company: "Vibe Studios",
-    initials: "MC",
-    color: "bg-orange-500",
-  },
-  {
-    quote:
-      "Our social media engagement increased by 340% in just three months. TRIO knows how to create content that resonates.",
-    name: "Emily Rodriguez",
-    title: "Marketing Director",
-    company: "GrowthHive",
-    initials: "ER",
-    color: "bg-blue-500",
-  },
-]
-
 export function Testimonials() {
   const t = useTranslations()
+  const testimonials = t.testimonials.items
 
   return (
     <section className="py-24 lg:py-32">

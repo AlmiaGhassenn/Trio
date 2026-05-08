@@ -4,14 +4,9 @@ import { motion } from "framer-motion"
 import { Globe, Zap } from "lucide-react"
 import { useTranslations } from "@/lib/locale-context"
 
-const team = [
-  { name: "Almia Ghassen", roleKey: "Web Developer", initials: "AG", color: "bg-primary" },
-  { name: "Safa Salaaoui", roleKey: "Social Media Manager and Graphic Designer", initials: "SS", color: "bg-blue-500" },
-  { name: "Ghassen ben salem", roleKey: "Video Editor", initials: "G", color: "bg-orange-500" },
-]
-
 export function About() {
   const t = useTranslations()
+  const team = t.about.team
 
   return (
     <section id="about" className="py-24 lg:py-32">
@@ -47,10 +42,10 @@ export function About() {
                   >
                     {member.initials}
                   </div>
-                  <div>
-                    <div className="font-medium text-foreground">{member.name}</div>
-                    <div className="text-sm text-muted-foreground">{member.roleKey}</div>
-                  </div>
+                   <div>
+                     <div className="font-medium text-foreground">{member.name}</div>
+                     <div className="text-sm text-muted-foreground">{member.role}</div>
+                   </div>
                 </motion.div>
               ))}
             </div>

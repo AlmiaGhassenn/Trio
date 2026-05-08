@@ -46,10 +46,15 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
     phone: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!selectedDay || !selectedTime || !formData.name || !formData.email) return
+
+    setIsSubmitting(true)
+    setSubmitError(null)
 
     try {
       // Send notification to business owner
@@ -70,7 +75,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
       // Send confirmation email to client
       await emailjs.send(
         "service_uhjejk8",
-        "template_qk4xjva", // You'll need to create this template
+        "template_qk4xjva",
         {
           to_name: formData.name,
           to_email: formData.email,
@@ -78,18 +83,16 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
           preferred_time: selectedTime,
         }
       )
-      
-      alert("Email sent successfully! We'll get back to you soon.")
+
       onClose()
       setFormData({ name: "", email: "", phone: "", message: "" })
       setSelectedDay(null)
       setSelectedTime(null)
     } catch (error: any) {
       console.error("Failed to send email:", error)
-      
-      // More specific error handling
-      let errorMessage = "Failed to send email. Please try again."
-      
+
+      let errorMessage = t.bookingModal.errorDefault || "Failed to send email. Please try again."
+
       if (error?.text) {
         errorMessage = `EmailJS Error: ${error.text}`
       } else if (error?.message) {
@@ -115,8 +118,10 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
             errorMessage = `Server error (${error.status}). Please try again.`
         }
       }
-      
-      alert(errorMessage)
+
+      setSubmitError(errorMessage)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -310,21 +315,34 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                   </div>
                 </div>
 
-                {/* Submit */}
-                <motion.button
-                  type="submit"
-                  disabled={!selectedDay || !selectedTime}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={cn(
-                    "w-full rounded-full px-8 py-4 text-base font-medium transition-all",
-                    selectedDay && selectedTime
-                      ? "bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25"
-                      : "cursor-not-allowed bg-secondary/50 text-muted-foreground"
-                  )}
-                >
-                  {t.bookingModal.confirm}
-                </motion.button>
+                 {/* Submit */}
+                 <motion.button
+                   type="submit"
+                   disabled={!selectedDay || !selectedTime || isSubmitting}
+                   whileHover={{ scale: 1.02 }}
+                   whileTap={{ scale: 0.98 }}
+                   className={cn(
+                     "w-full rounded-full px-8 py-4 text-base font-medium transition-all flex items-center justify-center gap-2",
+                     selectedDay && selectedTime && !isSubmitting
+                       ? "bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25"
+                       : "cursor-not-allowed bg-secondary/50 text-muted-foreground"
+                   )}
+                 >
+                   {isSubmitting ? (
+                     <>
+                       <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                       {t.bookingModal.submitting || "Sending..."}
+                     </>
+                   ) : (
+                     t.bookingModal.confirm
+                   )}
+                 </motion.button>
+
+                 {submitError && (
+                   <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+                     {submitError}
+                   </div>
+                 )}
 
                 <p className="text-center text-xs text-muted-foreground">
                   {t.bookingModal.agreement}

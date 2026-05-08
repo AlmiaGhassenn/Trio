@@ -26,16 +26,22 @@ export type Translations = {
     statsCountries: string
     scroll: string
   }
-  about: {
-    titleLine1: string
-    titleHighlight: string
-    paragraph1: string
-    paragraph2: string
-    paragraph3: string
-    remoteReady: string
-    established: string
-    statement: string
-  }
+   about: {
+     titleLine1: string
+     titleHighlight: string
+     paragraph1: string
+     paragraph2: string
+     paragraph3: string
+     remoteReady: string
+     established: string
+     statement: string
+     team: {
+       name: string
+       role: string
+       initials: string
+       color: string
+     }[]
+   }
   services: {
     headerLine1: string
     headerHighlight: string
@@ -68,44 +74,58 @@ export type Translations = {
      openInNewTab: string
      close: string
    }
-  cta: {
-    badge: string
-    titleLine1: string
-    titleHighlight: string
-    subtext: string
-    startProject: string
-    bookCall: string
-    responseTime: string
-    joinClients: string
-  }
+   cta: {
+     badge: string
+     titleLine1: string
+     titleHighlight: string
+     subtext: string
+     startProject: string
+     bookCall: string
+     responseTime: string
+     joinClients: string
+     teamAvatars: {
+       initials: string
+       color: string
+     }[]
+   }
   footer: {
     tagline: string
     copyright: string
   }
-  testimonials: {
-    titleLine1: string
-    titleHighlight: string
-    subtitle: string
-  }
-  bookingModal: {
-    title: string
-    subtitle: string
-    stepLabel: string
-    monthLabel: string
-    selectTimeLabel: string
-    fullName: string
-    email: string
-    phoneOptional: string
-    messageOptional: string
-    confirm: string
-    agreement: string
-    placeholderName: string
-    placeholderEmail: string
-    placeholderPhone: string
-    placeholderMessage: string
-    close: string
-    emailSubject: string
-  }
+   testimonials: {
+     titleLine1: string
+     titleHighlight: string
+     subtitle: string
+     items: {
+       quote: string
+       name: string
+       title: string
+       company: string
+       initials: string
+       color: string
+     }[]
+   }
+   bookingModal: {
+     title: string
+     subtitle: string
+     stepLabel: string
+     monthLabel: string
+     selectTimeLabel: string
+     fullName: string
+     email: string
+     phoneOptional: string
+     messageOptional: string
+     confirm: string
+     agreement: string
+     placeholderName: string
+     placeholderEmail: string
+     placeholderPhone: string
+     placeholderMessage: string
+     close: string
+     emailSubject: string
+     submitting: string
+     errorDefault: string
+   }
   projectsPage: {
     label: string
     title: string
@@ -152,6 +172,26 @@ const dictionaries: Record<Locale, Translations> = {
       remoteReady: "Remote Ready",
       established: "Est. 2024",
       statement: "\"We don't just build projects. We build partnerships.\"",
+      team: [
+        {
+          name: "Almia Ghassen",
+          role: "Web Developer",
+          initials: "AG",
+          color: "bg-primary",
+        },
+        {
+          name: "Safa Salaaoui",
+          role: "Social Media Manager and Graphic Designer",
+          initials: "SS",
+          color: "bg-blue-500",
+        },
+        {
+          name: "Ghassen ben salem",
+          role: "Video Editor",
+          initials: "G",
+          color: "bg-orange-500",
+        },
+      ],
     },
     services: {
       headerLine1: "Four Services.",
@@ -240,6 +280,11 @@ const dictionaries: Record<Locale, Translations> = {
       bookCall: "Book a Free Call",
       responseTime: "Typical response time: under 24 hours",
       joinClients: "Join 40+ happy clients",
+      teamAvatars: [
+        { initials: "SM", color: "bg-emerald-500" },
+        { initials: "MC", color: "bg-orange-500" },
+        { initials: "ER", color: "bg-blue-500" },
+      ],
     },
     footer: {
       tagline: "Three Minds. One Vision.",
@@ -249,6 +294,32 @@ const dictionaries: Record<Locale, Translations> = {
       titleLine1: "What Our",
       titleHighlight: "Clients",
       subtitle: "Don't just take our word for it. Here's what the people we've worked with have to say.",
+      items: [
+        {
+          quote: "TRIO transformed our online presence completely. The website they built not only looks stunning but actually converts visitors into customers.",
+          name: "Sarah Mitchell",
+          title: "CEO",
+          company: "Luxe Properties",
+          initials: "SM",
+          color: "bg-emerald-500",
+        },
+        {
+          quote: "Working with TRIO felt like having an in-house team. They understood our vision from day one and delivered beyond expectations.",
+          name: "Marcus Chen",
+          title: "Founder",
+          company: "Vibe Studios",
+          initials: "MC",
+          color: "bg-orange-500",
+        },
+        {
+          quote: "Our social media engagement increased by 340% in just three months. TRIO knows how to create content that resonates.",
+          name: "Emily Rodriguez",
+          title: "Marketing Director",
+          company: "GrowthHive",
+          initials: "ER",
+          color: "bg-blue-500",
+        },
+      ],
     },
     bookingModal: {
       title: "Book a Free Call",
@@ -268,6 +339,8 @@ const dictionaries: Record<Locale, Translations> = {
       placeholderMessage: "What would you like to discuss?",
       close: "Close modal",
       emailSubject: "Free Consultation - TRIO Agency",
+      submitting: "Sending...",
+      errorDefault: "Failed to send email. Please try again.",
     },
     projectsPage: {
       label: "Our Work",
@@ -314,6 +387,26 @@ const dictionaries: Record<Locale, Translations> = {
       remoteReady: "Travail à distance",
       established: "Depuis 2024",
       statement: "\"Nous ne construisons pas seulement des projets. Nous construisons des partenariats.\"",
+      team: [
+        {
+          name: "Almia Ghassen",
+          role: "Développeur Web",
+          initials: "AG",
+          color: "bg-primary",
+        },
+        {
+          name: "Safa Salaaoui",
+          role: "Gestionnaire de réseaux sociaux et graphiste",
+          initials: "SS",
+          color: "bg-blue-500",
+        },
+        {
+          name: "Ghassen ben salem",
+          role: "Monteur vidéo",
+          initials: "G",
+          color: "bg-orange-500",
+        },
+      ],
     },
     services: {
       headerLine1: "Quatre services.",
@@ -402,6 +495,11 @@ const dictionaries: Record<Locale, Translations> = {
       bookCall: "Réservez un appel gratuit",
       responseTime: "Temps de réponse typique : moins de 24 heures",
       joinClients: "Rejoignez plus de 40 clients satisfaits",
+      teamAvatars: [
+        { initials: "SM", color: "bg-emerald-500" },
+        { initials: "MC", color: "bg-orange-500" },
+        { initials: "ER", color: "bg-blue-500" },
+      ],
     },
     footer: {
       tagline: "Trois esprits. Une vision.",
@@ -412,6 +510,32 @@ const dictionaries: Record<Locale, Translations> = {
       titleHighlight: "nos clients",
       subtitle:
         "Ne vous fiez pas seulement à notre parole. Voici ce que disent les personnes avec qui nous avons travaillé.",
+      items: [
+        {
+          quote: "TRIO a complètement transformé notre présence en ligne. Le site web qu'ils ont construit est non seulement magnifique, mais convertit également les visiteurs en clients.",
+          name: "Sarah Mitchell",
+          title: "PDG",
+          company: "Luxe Properties",
+          initials: "SM",
+          color: "bg-emerald-500",
+        },
+        {
+          quote: "Travailler avec TRIO, c'est comme avoir une équipe interne. Ils ont compris notre vision dès le premier jour et ont livré bien au-delà de nos attentes.",
+          name: "Marcus Chen",
+          title: "Fondateur",
+          company: "Vibe Studios",
+          initials: "MC",
+          color: "bg-orange-500",
+        },
+        {
+          quote: "Notre engagement sur les réseaux sociaux a augmenté de 340 % en seulement trois mois. TRIO sait comment créer du contenu qui résonne.",
+          name: "Emily Rodriguez",
+          title: "Directrice Marketing",
+          company: "GrowthHive",
+          initials: "ER",
+          color: "bg-blue-500",
+        },
+      ],
     },
     bookingModal: {
       title: "Réservez un appel gratuit",
@@ -431,6 +555,8 @@ const dictionaries: Record<Locale, Translations> = {
       placeholderMessage: "De quoi souhaitez-vous discuter ?",
       close: "Fermer la fenêtre",
       emailSubject: "Consultation gratuite - TRIO Agency",
+      submitting: "Envoi...",
+      errorDefault: "Échec de l'envoi de l'e-mail. Veuillez réessayer.",
     },
     projectsPage: {
       label: "Notre travail",

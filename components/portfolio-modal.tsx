@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
 import { useTranslations } from "@/lib/locale-context"
@@ -20,6 +21,13 @@ export function PortfolioModal({
   image,
 }: PortfolioModalProps) {
   const t = useTranslations()
+  const [iframeLoaded, setIframeLoaded] = useState(false)
+
+  useEffect(() => {
+    if (isOpen) {
+      setIframeLoaded(false)
+    }
+  }, [isOpen])
 
   return (
     <AnimatePresence>
@@ -67,18 +75,24 @@ export function PortfolioModal({
                {/* Content - Hide iframe on mobile */}
                <div className="relative bg-background/50">
                  <div className="hidden md:block aspect-video">
+                   {!iframeLoaded && (
+                     <div className="absolute inset-0 flex items-center justify-center bg-background">
+                       <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                     </div>
+                   )}
                    <iframe
                      src={portfolioUrl}
                      title={title}
                      className="w-full h-full border-none"
                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                     onLoad={() => setIframeLoaded(true)}
                    />
                  </div>
-                <div className="md:hidden flex items-center justify-center aspect-video p-8 text-center">
-                  <p className="text-muted-foreground">
-                    {t.portfolio.mobileViewMessage}
-                  </p>
-                </div>
+                 <div className="md:hidden flex items-center justify-center aspect-video p-8 text-center">
+                   <p className="text-muted-foreground">
+                     {t.portfolio.mobileViewMessage}
+                   </p>
+                 </div>
                </div>
 
                {/* Footer */}

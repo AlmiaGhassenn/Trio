@@ -9,6 +9,7 @@ import { useTranslations } from "@/lib/locale-context"
 export function CTA() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const t = useTranslations()
+  const teamAvatars = t.cta.teamAvatars
 
   return (
     <section id="contact" className="py-24 lg:py-32 relative overflow-hidden">
@@ -62,15 +63,14 @@ export function CTA() {
             <p className="text-sm text-muted-foreground">{t.cta.responseTime}</p>
             <div className="flex items-center gap-2">
               <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-emerald-500 border-2 border-background flex items-center justify-center text-xs text-white font-medium">
-                  SM
-                </div>
-                <div className="w-8 h-8 rounded-full bg-orange-500 border-2 border-background flex items-center justify-center text-xs text-white font-medium">
-                  MC
-                </div>
-                <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-background flex items-center justify-center text-xs text-white font-medium">
-                  ER
-                </div>
+                {teamAvatars.map((avatar, index) => (
+                  <div
+                    key={index}
+                    className={`w-8 h-8 rounded-full ${avatar.color} border-2 border-background flex items-center justify-center text-xs text-white font-medium`}
+                  >
+                    {avatar.initials}
+                  </div>
+                ))}
               </div>
               <span className="text-sm text-muted-foreground">{t.cta.joinClients}</span>
             </div>
