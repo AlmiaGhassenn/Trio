@@ -58,13 +58,16 @@ export type Translations = {
     }[]
   }
   marquee: string[]
-  portfolio: {
-    title: string
-    highlight: string
-    description: string
-    viewAll: string
-    viewProject: string
-  }
+   portfolio: {
+     title: string
+     highlight: string
+     description: string
+     viewAll: string
+     viewProject: string
+     mobileViewMessage: string
+     openInNewTab: string
+     close: string
+   }
   cta: {
     badge: string
     titleLine1: string
@@ -223,6 +226,9 @@ const dictionaries: Record<Locale, Translations> = {
         "A showcase of projects that demonstrate our capabilities across all four services.",
       viewAll: "View All Projects",
       viewProject: "View Project",
+      mobileViewMessage: "View this project on desktop for the best experience, or use the button below to open it in a new tab.",
+      openInNewTab: "Open in new tab →",
+      close: "Close",
     },
     cta: {
       badge: "We're Currently Accepting New Projects",
@@ -382,6 +388,9 @@ const dictionaries: Record<Locale, Translations> = {
         "Une sélection de projets qui démontrent nos compétences dans les quatre services.",
       viewAll: "Voir tous les projets",
       viewProject: "Voir le projet",
+      mobileViewMessage: "Consultez ce projet sur ordinateur pour une meilleure expérience, ou utilisez le bouton ci-dessous pour l'ouvrir dans un nouvel onglet.",
+      openInNewTab: "Ouvrir dans un nouvel onglet →",
+      close: "Fermer",
     },
     cta: {
       badge: "Nous acceptons actuellement de nouveaux projets",

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
+import { useTranslations } from "@/lib/locale-context"
 
 interface PortfolioModalProps {
   isOpen: boolean
@@ -18,6 +19,8 @@ export function PortfolioModal({
   portfolioUrl,
   image,
 }: PortfolioModalProps) {
+  const t = useTranslations()
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -61,33 +64,40 @@ export function PortfolioModal({
                 </button>
               </div>
 
-              {/* Content */}
-              <div className="relative aspect-video bg-background/50">
-                <iframe
-                  src={portfolioUrl}
-                  title={title}
-                  className="w-full h-full border-none"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                />
-              </div>
+               {/* Content - Hide iframe on mobile */}
+               <div className="relative bg-background/50">
+                 <div className="hidden md:block aspect-video">
+                   <iframe
+                     src={portfolioUrl}
+                     title={title}
+                     className="w-full h-full border-none"
+                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                   />
+                 </div>
+                <div className="md:hidden flex items-center justify-center aspect-video p-8 text-center">
+                  <p className="text-muted-foreground">
+                    {t.portfolio.mobileViewMessage}
+                  </p>
+                </div>
+               </div>
 
-              {/* Footer */}
-              <div className="flex items-center justify-between gap-4 p-4 border-t border-border bg-background/50">
-                <a
-                  href={portfolioUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-primary hover:underline font-medium"
-                >
-                  Open in new tab →
-                </a>
-                <button
-                  onClick={onClose}
-                  className="px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity text-sm font-medium"
-                >
-                  Close
-                </button>
-              </div>
+               {/* Footer */}
+               <div className="flex items-center justify-between gap-4 p-4 border-t border-border bg-background/50">
+                 <a
+                   href={portfolioUrl}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="text-sm text-primary hover:underline font-medium"
+                 >
+                   {t.portfolio.openInNewTab}
+                 </a>
+                 <button
+                   onClick={onClose}
+                   className="px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity text-sm font-medium"
+                 >
+                   {t.portfolio.close}
+                 </button>
+               </div>
             </div>
           </motion.div>
         </>
