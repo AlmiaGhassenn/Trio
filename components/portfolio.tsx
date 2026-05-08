@@ -28,7 +28,12 @@ export function Portfolio() {
 
   const handleProjectClick = (project: typeof projects[0]) => {
     if (project.portfolioUrl) {
-      setSelectedProject(project)
+      // Open Google Drive links directly in new tab (iframe blocking)
+      if (project.portfolioUrl.includes('drive.google.com')) {
+        window.open(project.portfolioUrl, '_blank')
+      } else {
+        setSelectedProject(project)
+      }
     }
   }
 
