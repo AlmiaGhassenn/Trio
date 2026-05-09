@@ -1,15 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Instagram, Linkedin, Dribbble } from "lucide-react"
+import { Instagram, Linkedin, Dribbble, Facebook } from "lucide-react"
 import { useTranslations } from "@/lib/locale-context"
 import { usePathname } from "next/navigation"
 import { supportedLocales, defaultLocale, type Locale } from "@/lib/i18n"
 
 const socialLinks = [
   { name: "Instagram", href: "#", icon: Instagram },
-  { name: "LinkedIn", href: "#", icon: Linkedin },
-  { name: "Behance", href: "#", icon: Dribbble },
+  { name: "Facebook", href: "#", icon: Facebook },
 ]
 
 function getLocaleFromPathname(pathname: string) {
